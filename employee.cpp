@@ -25,7 +25,10 @@ void Employee::printEmployee() {
     std::cout << m_position << std::endl;
 }
 
-void Employee::sortEmployees(Employee employees[], SortingDirection sortDirection, SortingProperty sortProperty, int countOfEmployees) {
+void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
+
+    SortingDirection sortDirection = static_cast<SortingDirection>(2);
+    SortingProperty sortProperty = static_cast<SortingProperty>(2);
     if (sortDirection == SortingDirection::ASC) {
         switch (sortProperty)
         {

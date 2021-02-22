@@ -27,6 +27,6 @@ public:
 
     void getEmployee();
     void printEmployee();
-    void sortEmployees(Employee employees[], SortingDirection direction, SortingProperty prorerty, int countOfEmployees);
+    void sortEmployees(Employee employees[], int countOfEmployees);
 };
 

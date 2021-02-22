@@ -25,7 +25,7 @@ int main()
     int countOfEmployees = 5;
     SortingDirection sortDirection = static_cast<SortingDirection>(2);
     SortingProperty sortProperty = static_cast<SortingProperty>(2);
-    employees->sortEmployees(employees,sortDirection,sortProperty, countOfEmployees);
+    employees->sortEmployees(employees,countOfEmployees);
     
 
     for (size_t i = 0; i < 5; i++)
