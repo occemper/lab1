@@ -12,7 +12,9 @@ int main()
     
     //employee.getEmployee();
 
-    Employee employees[5]{
+    const int countOfEmployees = 5;
+
+    Employee employees[countOfEmployees]{
         {"Иванов", "Иван", "Иванович", "22", "02", "1991", "Аряляр", "Главный архитектор"},
         {"Иванов", "Иван", "Андреевич", "16", "03", "2001", "Маляр", "Главный архитектор"},
         {"Сидоров", "Иван", "Иванович", "24", "02", "2002", "Архитектор", "Главный архитектор" },
@@ -22,7 +24,6 @@ int main()
 
     std::fstream f("employees.txt");
     
-    int countOfEmployees = 5;
     SortingDirection sortDirection = static_cast<SortingDirection>(2);
     SortingProperty sortProperty = static_cast<SortingProperty>(2);
     employees->sortEmployees(employees,countOfEmployees);
