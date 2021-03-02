@@ -28,26 +28,18 @@ void Employee::printEmployee() {
 
 void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
 
-<<<<<<< HEAD
-    SetConsoleOutputCP(1251);
-
->>>>>>>>> Temporary merge branch 2
     SortingDirection sortDirection{};
     SortingProperty sortProperty{};
     short t;
 
-    std::cout << "�������� �������� ����������: 1 � ���, 2 � ���� ��������, 3 � �������������, 4 � ���������: " << std::endl;
+    std::cout << "Выберите свойство сортировки: 1 – ФИО, 2 – дата рождения, 3 – специальность, 4 – должность: " << std::endl;
     std::cin >> t;
     sortProperty = static_cast<SortingProperty>(t);
 
-    std::cout << "�������� ����������� ����������: 1 � �� �����������, 2 � �� ��������: " << std::endl;
+    std::cout << "Выберите направление сортировки: 1 – по возрастанию, 2 – по убыванию: " << std::endl;
     std::cin >> t;
     sortDirection = static_cast<SortingDirection>(t);
 
-=======
-    SortingDirection sortDirection = static_cast<SortingDirection>(2);
-    SortingProperty sortProperty = static_cast<SortingProperty>(2);
->>>>>>> parent of b03d8a8 (выбор действий)
     if (sortDirection == SortingDirection::ASC) {
         switch (sortProperty)
         {
