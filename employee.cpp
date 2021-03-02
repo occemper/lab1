@@ -28,6 +28,7 @@ void Employee::printEmployee() {
 
 void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
 
+
     SortingDirection sortDirection{};
     SortingProperty sortProperty{};
     short t;
@@ -39,6 +40,10 @@ void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
     std::cout << "Выберите направление сортировки: 1 – по возрастанию, 2 – по убыванию: " << std::endl;
     std::cin >> t;
     sortDirection = static_cast<SortingDirection>(t);
+
+
+    SortingDirection sortDirection = static_cast<SortingDirection>(2);
+    SortingProperty sortProperty = static_cast<SortingProperty>(2);
 
     if (sortDirection == SortingDirection::ASC) {
         switch (sortProperty)
