@@ -1,6 +1,8 @@
 ﻿#include "employee.h"
 #include <iostream>
 #include <algorithm>
+#include <Windows.h>
+
 
 
 void Employee::getEmployee() {
@@ -28,6 +30,8 @@ void Employee::printEmployee() {
 
 void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
 
+    SetConsoleOutputCP(1251);
+    SetConsoleOutputCP(1251);
 
     SortingDirection sortDirection{};
     SortingProperty sortProperty{};
