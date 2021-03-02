@@ -41,10 +41,6 @@ void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
     std::cin >> t;
     sortDirection = static_cast<SortingDirection>(t);
 
-
-    SortingDirection sortDirection = static_cast<SortingDirection>(2);
-    SortingProperty sortProperty = static_cast<SortingProperty>(2);
-
     if (sortDirection == SortingDirection::ASC) {
         switch (sortProperty)
         {
