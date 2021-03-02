@@ -1,4 +1,4 @@
-#include "employee.h"
+п»ї#include "employee.h"
 #include <iostream>
 #include <algorithm>
 
@@ -28,15 +28,18 @@ void Employee::printEmployee() {
 
 void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
 
+    SetConsoleOutputCP(1251);
+
+>>>>>>>>> Temporary merge branch 2
     SortingDirection sortDirection{};
     SortingProperty sortProperty{};
     short t;
 
-    std::cout << "Выберите свойство сортировки: 1 – ФИО, 2 – дата рождения, 3 – специальность, 4 – должность: " << std::endl;
+    std::cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: 1 пїЅ пїЅпїЅпїЅ, 2 пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, 3 пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, 4 пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << std::endl;
     std::cin >> t;
     sortProperty = static_cast<SortingProperty>(t);
 
-    std::cout << "Выберите направление сортировки: 1 – по возрастанию, 2 – по убыванию: " << std::endl;
+    std::cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: 1 пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, 2 пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << std::endl;
     std::cin >> t;
     sortDirection = static_cast<SortingDirection>(t);
 
