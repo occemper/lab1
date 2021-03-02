@@ -1,6 +1,9 @@
 #include "employee.h"
 #include <iostream>
 #include <algorithm>
+#include <Windows.h>
+
+
 
 void Employee::getEmployee() {
     std::cin >> m_surname;
@@ -27,8 +30,21 @@ void Employee::printEmployee() {
 
 void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
 
-    SortingDirection sortDirection = static_cast<SortingDirection>(2);
-    SortingProperty sortProperty = static_cast<SortingProperty>(2);
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+    SortingDirection sortDirection{};
+    SortingProperty sortProperty{};
+    short t;
+
+    std::cout << "¬ыберите свойство сортировки: 1 Ц ‘»ќ, 2 Ц дата рождени€, 3 Ц специальность, 4 Ц должность: " << std::endl;
+    std::cin >> t;
+    sortProperty = static_cast<SortingProperty>(t);
+
+    std::cout << "¬ыберите направление сортировки: 1 Ц по возрастанию, 2 Ц по убыванию: " << std::endl;
+    std::cin >> t;
+    sortDirection = static_cast<SortingDirection>(t);
+
     if (sortDirection == SortingDirection::ASC) {
         switch (sortProperty)
         {
