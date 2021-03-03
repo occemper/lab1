@@ -26,6 +26,8 @@ public:
     std::string m_position;
 
     void getEmployee();
+    void writeEmployee();
+    void readEmployees(Employee employees[]);
     void printEmployee();
     void sortEmployees(Employee employees[], int countOfEmployees);
 };

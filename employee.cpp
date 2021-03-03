@@ -1,7 +1,7 @@
 ﻿#include "employee.h"
 #include <iostream>
 #include <algorithm>
-
+#include <fstream>
 
 
 void Employee::getEmployee() {
@@ -14,6 +14,41 @@ void Employee::getEmployee() {
     std::cin >> m_speciality;
     std::cin.ignore();
     std::getline(std::cin, m_position);
+}
+
+void Employee::readEmployees(Employee employees[]) {
+    std::ifstream fin;
+    fin.open("employees.txt");
+
+    int i = 0;
+
+
+
+    if (!fin.is_open()) {
+        std::cout << "failed to open employees.txt" << std::endl;
+    }
+    else
+    {
+        Employee emp{};
+        while (fin.read(reinterpret_cast<char*>(&emp), sizeof(emp))) {
+            emp.printEmployee();
+        }
+    }
+
+    fin.close();
+}
+
+void Employee::writeEmployee() {
+
+    Employee emp{};
+
+    std::ofstream fout("employees.txt", std::ios::app);
+    emp.getEmployee();
+
+    fout.write((char*)&emp, sizeof(emp));
+    fout.close();
+
+
 }
 
 void Employee::printEmployee() {

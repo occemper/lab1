@@ -6,7 +6,7 @@
 
 char getOperation()
 {
-    char op;
+    char op{};
     do
     {
         std::cout << "1 – вывести список сотрудников, 2 – добавить сотрудника, 3 - сортировка, 4 - поиск, 5 выход: ";
@@ -50,8 +50,11 @@ int main()
             break;
 
         case '2':
-            ;
-            break;
+        {
+            employees->writeEmployee();
+            employees->readEmployees(employees);
+        }
+        break;
 
         case '3':
             employees->sortEmployees(employees, countOfEmployees);
