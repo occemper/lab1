@@ -14,9 +14,8 @@ void Employee::getEmployee()
     std::cout << "Введите день рождения: "; std::cin >> m_dayOfBirth;
     std::cout << "Введите месяц рождения: "; std::cin >> m_monthOfBirth;
     std::cout << "Введите год рождения: "; std::cin >> m_yearOfBirth;
-    std::cin.ignore();
-    std::cout << "Введите специальность по образованию: "; std::getline(std::cin, m_speciality);
-    std::cout << "Введите должность: "; std::getline(std::cin, m_position);
+    std::cout << "Введите специальность по образованию: "; std::cin >> m_speciality;
+    std::cout << "Введите должность: "; std::cin >> m_position;
 }
 
 int Employee::getCountOfEmployees() 

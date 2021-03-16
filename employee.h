@@ -26,9 +26,8 @@ enum class SearchingProperty {
     POSITION = 8
 };
 
-class Employee {
-    static const int smallStrSize = 16;
-    static const int bigStrSize = 32;
+class Employee 
+{
 public:
     std::string m_surname;
     std::string m_name;
@@ -44,7 +43,6 @@ public:
     void readEmployees(std::vector <Employee>& masEmployees);
     void writeEmployee(std::vector <Employee>& masEmployees);
     void printEmployee();
-    //void rewriteEmployee(std::vector <Employee>& masEmployees);
     void sortEmployees(std::vector<Employee>& Employee);
     void findEmployees(std::vector<Employee>& Employee);
 };
