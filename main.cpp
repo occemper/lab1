@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "employee.h"
 #include <algorithm>
+#include <vector>
 
 char getOperation()
 {
@@ -22,18 +23,8 @@ int main()
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-
-    //employee.getEmployee();
-
-    const int countOfEmployees = 5;
-
-    Employee employees[countOfEmployees]{
-        {"Иванов", "Иван", "Иванович", "22", "02", "1991", "Аряляр", "Главный архитектор"},
-        {"Иванов", "Иван", "Андреевич", "16", "03", "2001", "Маляр", "Главный архитектор"},
-        {"Сидоров", "Иван", "Иванович", "24", "02", "2002", "Архитектор", "Главный архитектор" },
-        {"Кулибин", "Иван", "Иванович", "17", "02", "1991", "Архитектор", "Главный архитектор"},
-        {"Седов", "Иван", "Иванович", "11", "02", "1989", "Архитектор", "Главный архитектор"}
-    };
+    Employee employee{};
+    std::vector<Employee> masEmployees(employee.getCountOfEmployees());
 
     char op{};
     while (op != '5') {
@@ -43,21 +34,18 @@ int main()
         {
         default:
         case '1':
-            for (size_t i = 0; i < 5; i++)
-            {
-                employees[i].printEmployee();
-            };
+            employee.readEmployees(masEmployees);
             break;
 
         case '2':
         {
-            employees->writeEmployee();
-            employees->readEmployees(employees);
+            employee.getEmployee();
+            employee.writeEmployee(masEmployees);
         }
         break;
 
         case '3':
-            employees->sortEmployees(employees, countOfEmployees);
+            employee.sortEmployees(masEmployees);
             break;
 
         case '4':
@@ -72,5 +60,4 @@ int main()
         std::cout << std::endl;
     }
 
-    system("pause");
 }

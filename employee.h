@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 enum class SortingDirection {
     ASC = 1,
@@ -15,6 +16,8 @@ enum class SortingProperty {
 };
 
 class Employee {
+    static const int smallStrSize = 16;
+    static const int bigStrSize = 32;
 public:
     std::string m_surname;
     std::string m_name;
@@ -26,9 +29,11 @@ public:
     std::string m_position;
 
     void getEmployee();
-    void writeEmployee();
-    void readEmployees(Employee employees[]);
+    int getCountOfEmployees();
+    void readEmployees(std::vector <Employee>& masEmployees);
+    void writeEmployee(std::vector <Employee>& masEmployees);
     void printEmployee();
-    void sortEmployees(Employee employees[], int countOfEmployees);
+    //void rewriteEmployee(std::vector <Employee>& masEmployees);
+    void sortEmployees(std::vector<Employee>& Employee);
 };
 
