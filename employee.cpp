@@ -6,7 +6,8 @@
 #include <iomanip>
 
 
-void Employee::getEmployee() {
+void Employee::getEmployee() 
+{
     std::cout << "Введите фамилию: "; std::cin >> m_surname;
     std::cout << "Введите имя: "; std::cin >> m_name;
     std::cout << "Введите отчество: "; std::cin >> m_patronymic;
@@ -15,10 +16,11 @@ void Employee::getEmployee() {
     std::cout << "Введите год рождения: "; std::cin >> m_yearOfBirth;
     std::cin.ignore();
     std::cout << "Введите специальность по образованию: "; std::getline(std::cin, m_speciality);
-    std::cout << "Введите должность: "; std::getline(std::cin,m_position);
+    std::cout << "Введите должность: "; std::getline(std::cin, m_position);
 }
 
-int Employee::getCountOfEmployees() {
+int Employee::getCountOfEmployees() 
+{
     std::ifstream fin("employees.dat", std::ofstream::binary);
     static Employee emp{};
     int countOfEmployees{ 0 };
@@ -38,7 +40,8 @@ int Employee::getCountOfEmployees() {
     return countOfEmployees;
 }
 
-void Employee::readEmployees(std::vector <Employee>& masEmployees) {
+void Employee::readEmployees(std::vector <Employee>& masEmployees) 
+{
     std::ifstream fin("employees.dat", std::ofstream::binary);
     Employee emp;
 
@@ -56,7 +59,8 @@ void Employee::readEmployees(std::vector <Employee>& masEmployees) {
     fin.close();
 }
 
-void Employee::writeEmployee(std::vector <Employee>& masEmployees) {
+void Employee::writeEmployee(std::vector <Employee>& masEmployees)
+{
     std::ofstream fout("employees.dat", std::ios::app, std::ofstream::binary);
     masEmployees.push_back(*this);
     fout.write((char*)this, sizeof(Employee));
@@ -64,7 +68,8 @@ void Employee::writeEmployee(std::vector <Employee>& masEmployees) {
     fout.close();
 }
 
-void Employee::printEmployee() {
+void Employee::printEmployee()
+{
     std::cout << m_surname << "\t";
     std::cout << m_name << "\t";
     std::cout << m_patronymic << "\t";
@@ -75,7 +80,8 @@ void Employee::printEmployee() {
     std::cout << m_position << std::endl;
 }
 
-void rewriteEmployee(std::vector <Employee>& masEmployees) {
+void rewriteEmployee(std::vector <Employee>& masEmployees)
+{
     std::ofstream fout("employees.dat", std::ios::out);
 
     for (size_t i = 0; i < masEmployees.size(); i++)
@@ -86,7 +92,8 @@ void rewriteEmployee(std::vector <Employee>& masEmployees) {
     fout.close();
 }
 
-void Employee::sortEmployees(std::vector<Employee>& masEmployees) {
+void Employee::sortEmployees(std::vector<Employee>& masEmployees)
+{
 
     SortingDirection sortDirection{};
     SortingProperty sortProperty{};
@@ -181,5 +188,89 @@ void Employee::sortEmployees(std::vector<Employee>& masEmployees) {
     rewriteEmployee(masEmployees);
 }
 
+void Employee::findEmployees(std::vector<Employee>& masEmployees)
+{
+
+    SearchingProperty searchProperty{};
+    short t;
+
+    std::cout << "Выберите свойство поиска: 1 – ФИО, 2 – дата рождения, 3 – специальность, 4 – должность: " << std::endl;
+    std::cin >> t;
+    searchProperty = static_cast<SearchingProperty>(t);
+
+    std::string strSearch;
+    std::cin >> strSearch;
+
+    switch (searchProperty)
+    {
+    case SearchingProperty::NAME:
+        for (Employee emp : masEmployees) {
+            if (emp.m_name.find(strSearch)!=-1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::SURNAME:
+        for (Employee emp : masEmployees) {
+            if (emp.m_surname.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::PATRONYMIC:
+        for (Employee emp : masEmployees) {
+            if (emp.m_patronymic.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::DAY_OF_BIRTH:
+        for (Employee emp : masEmployees) {
+            if (emp.m_dayOfBirth.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::MONTH_OF_BIRTH:
+        for (Employee emp : masEmployees) {
+            if (emp.m_monthOfBirth.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::YEAR_OF_BIRTH:
+        for (Employee emp : masEmployees) {
+            if (emp.m_yearOfBirth.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::SPECIALITY:
+        for (Employee emp : masEmployees) {
+            if (emp.m_speciality.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::POSITION:
+        for (Employee emp : masEmployees) {
+            if (emp.m_position.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    default:
+        break;
+    }
+
+}
 
 

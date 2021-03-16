@@ -49,7 +49,7 @@ int main()
             break;
 
         case '4':
-            ;
+            employee.findEmployees(masEmployees);
             break;
 
         case '5':
