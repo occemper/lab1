@@ -5,27 +5,28 @@
 #include <vector>
 #include <iomanip>
 
+using namespace std;
 
-void Employee::getEmployee() 
+void Employee::getEmployee()
 {
-    std::cout << "Введите фамилию: "; std::cin >> m_surname;
-    std::cout << "Введите имя: "; std::cin >> m_name;
-    std::cout << "Введите отчество: "; std::cin >> m_patronymic;
-    std::cout << "Введите день рождения: "; std::cin >> m_dayOfBirth;
-    std::cout << "Введите месяц рождения: "; std::cin >> m_monthOfBirth;
-    std::cout << "Введите год рождения: "; std::cin >> m_yearOfBirth;
-    std::cout << "Введите специальность по образованию: "; std::cin >> m_speciality;
-    std::cout << "Введите должность: "; std::cin >> m_position;
+    cout << "Введите фамилию: "; cin >> m_surname;
+    cout << "Введите имя: "; cin >> m_name;
+    cout << "Введите отчество: "; cin >> m_patronymic;
+    cout << "Введите день рождения: "; cin >> m_dayOfBirth;
+    cout << "Введите месяц рождения: "; cin >> m_monthOfBirth;
+    cout << "Введите год рождения: "; cin >> m_yearOfBirth;
+    cout << "Введите специальность по образованию: "; cin >> m_speciality;
+    cout << "Введите должность: "; cin >> m_position;
 }
 
-int Employee::getCountOfEmployees() 
+int Employee::getCountOfEmployees()
 {
-    std::ifstream fin("employees.dat", std::ofstream::binary);
+    ifstream fin("employees.dat", ofstream::binary);
     static Employee emp{};
     int countOfEmployees{ 0 };
 
     if (!fin.is_open()) {
-        std::cout << "failed to open employees.dat" << std::endl;
+        cout << "failed to open employees.dat" << endl;
     }
     else
     {
@@ -39,13 +40,13 @@ int Employee::getCountOfEmployees()
     return countOfEmployees;
 }
 
-void Employee::readEmployees(std::vector <Employee>& masEmployees) 
+void Employee::readEmployees(vector <Employee>& masEmployees)
 {
-    std::ifstream fin("employees.dat", std::ofstream::binary);
-    Employee emp;
+    ifstream fin("employees.dat", ofstream::binary);
+    Employee emp{};
 
     if (!fin.is_open()) {
-        std::cout << "failed to open employees.dat" << std::endl;
+        cout << "failed to open employees.dat" << endl;
     }
     else
     {
@@ -58,9 +59,9 @@ void Employee::readEmployees(std::vector <Employee>& masEmployees)
     fin.close();
 }
 
-void Employee::writeEmployee(std::vector <Employee>& masEmployees)
+void Employee::writeEmployee(vector <Employee>& masEmployees)
 {
-    std::ofstream fout("employees.dat", std::ios::app, std::ofstream::binary);
+    ofstream fout("employees.dat", ios::app, ofstream::binary);
     masEmployees.push_back(*this);
     fout.write((char*)this, sizeof(Employee));
 
@@ -69,19 +70,19 @@ void Employee::writeEmployee(std::vector <Employee>& masEmployees)
 
 void Employee::printEmployee()
 {
-    std::cout << m_surname << "\t";
-    std::cout << m_name << "\t";
-    std::cout << m_patronymic << "\t";
-    std::cout << m_dayOfBirth << ".";
-    std::cout << m_monthOfBirth << ".";
-    std::cout << m_yearOfBirth << "\t";
-    std::cout << m_speciality << "\t";
-    std::cout << m_position << std::endl;
+    cout << m_surname << "\t";
+    cout << m_name << "\t";
+    cout << m_patronymic << "\t";
+    cout << m_dayOfBirth << ".";
+    cout << m_monthOfBirth << ".";
+    cout << m_yearOfBirth << "\t";
+    cout << m_speciality << "\t";
+    cout << m_position << endl;
 }
 
-void rewriteEmployee(std::vector <Employee>& masEmployees)
+void rewriteEmployee(vector <Employee>& masEmployees)
 {
-    std::ofstream fout("employees.dat", std::ios::out);
+    ofstream fout("employees.dat", ios::out);
 
     for (size_t i = 0; i < masEmployees.size(); i++)
     {
@@ -91,26 +92,26 @@ void rewriteEmployee(std::vector <Employee>& masEmployees)
     fout.close();
 }
 
-void Employee::sortEmployees(std::vector<Employee>& masEmployees)
+void Employee::sortEmployees(vector<Employee>& masEmployees)
 {
 
     SortingDirection sortDirection{};
     SortingProperty sortProperty{};
     short t;
 
-    std::cout << "Выберите свойство сортировки: 1 – ФИО, 2 – дата рождения, 3 – специальность, 4 – должность: " << std::endl;
-    std::cin >> t;
+    cout << "Выберите свойство сортировки: 1 – ФИО, 2 – дата рождения, 3 – специальность, 4 – должность: " << endl;
+    cin >> t;
     sortProperty = static_cast<SortingProperty>(t);
 
-    std::cout << "Выберите направление сортировки: 1 – по возрастанию, 2 – по убыванию: " << std::endl;
-    std::cin >> t;
+    cout << "Выберите направление сортировки: 1 – по возрастанию, 2 – по убыванию: " << endl;
+    cin >> t;
     sortDirection = static_cast<SortingDirection>(t);
 
     if (sortDirection == SortingDirection::ASC) {
         switch (sortProperty)
         {
         case SortingProperty::FULL_NAME:
-            std::sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 if (a.m_surname == b.m_surname) {
                     if (a.m_name == b.m_name)
                         return a.m_patronymic < b.m_patronymic;
@@ -121,7 +122,7 @@ void Employee::sortEmployees(std::vector<Employee>& masEmployees)
             break;
 
         case SortingProperty::DATE_OF_BIRTH:
-            std::sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 if (a.m_yearOfBirth == b.m_yearOfBirth) {
                     if (a.m_monthOfBirth == b.m_monthOfBirth)
                         return a.m_dayOfBirth < b.m_dayOfBirth;
@@ -132,12 +133,12 @@ void Employee::sortEmployees(std::vector<Employee>& masEmployees)
             break;
 
         case SortingProperty::SPECIALITY:
-            std::sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 return a.m_speciality < b.m_speciality; });
             break;
 
         case SortingProperty::POSITION:
-            std::sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 return a.m_position < b.m_position; });
             break;
 
@@ -149,7 +150,7 @@ void Employee::sortEmployees(std::vector<Employee>& masEmployees)
         switch (sortProperty)
         {
         case SortingProperty::FULL_NAME:
-            std::sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 if (a.m_surname == b.m_surname) {
                     if (a.m_name == b.m_name)
                         return a.m_patronymic > b.m_patronymic;
@@ -160,7 +161,7 @@ void Employee::sortEmployees(std::vector<Employee>& masEmployees)
             break;
 
         case SortingProperty::DATE_OF_BIRTH:
-            std::sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 if (a.m_yearOfBirth == b.m_yearOfBirth) {
                     if (a.m_monthOfBirth == b.m_monthOfBirth)
                         return a.m_dayOfBirth > b.m_dayOfBirth;
@@ -171,12 +172,12 @@ void Employee::sortEmployees(std::vector<Employee>& masEmployees)
             break;
 
         case SortingProperty::SPECIALITY:
-            std::sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 return a.m_speciality > b.m_speciality; });
             break;
 
         case SortingProperty::POSITION:
-            std::sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 return a.m_position > b.m_position; });
             break;
 
@@ -187,24 +188,25 @@ void Employee::sortEmployees(std::vector<Employee>& masEmployees)
     rewriteEmployee(masEmployees);
 }
 
-void Employee::findEmployees(std::vector<Employee>& masEmployees)
+void Employee::findEmployees(vector<Employee>& masEmployees)
 {
 
     SearchingProperty searchProperty{};
     short t;
 
-    std::cout << "Выберите свойство поиска: 1 – ФИО, 2 – дата рождения, 3 – специальность, 4 – должность: " << std::endl;
-    std::cin >> t;
+    cout << "Выберите свойство поиска: 1 – имя, 2 – фамилия, 3 – очество, 4 – день рождения, 5 – месяц рождения" << endl;
+    cout << "6 – год рождения, 5 – специальность, 6 – должность : " << endl;
+    cin >> t;
     searchProperty = static_cast<SearchingProperty>(t);
 
-    std::string strSearch;
-    std::cin >> strSearch;
+    string strSearch;
+    cin >> strSearch;
 
     switch (searchProperty)
     {
     case SearchingProperty::NAME:
         for (Employee emp : masEmployees) {
-            if (emp.m_name.find(strSearch)!=-1) {
+            if (emp.m_name.find(strSearch) != -1) {
                 emp.printEmployee();
             }
         }

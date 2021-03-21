@@ -5,13 +5,15 @@
 #include <algorithm>
 #include <vector>
 
+using namespace std;
+
 char getOperation()
 {
     char op{};
     do
     {
-        std::cout << "1 – вывести список сотрудников, 2 – добавить сотрудника, 3 - сортировка, 4 - поиск, 5 выход: ";
-        std::cin >> op;
+        cout << "1 – вывести список сотрудников, 2 – добавить сотрудника, 3 - сортировка, 4 - поиск, 5 выход: ";
+        cin >> op;
 
     } while (op != '1' && op != '2' && op != '3' && op != '4' && op != '5');
 
@@ -24,7 +26,7 @@ int main()
     SetConsoleOutputCP(1251);
 
     Employee employee{};
-    std::vector<Employee> masEmployees(employee.getCountOfEmployees());
+    vector<Employee> masEmployees(employee.getCountOfEmployees());
 
     char op{};
     while (op != '5') {
@@ -57,7 +59,7 @@ int main()
             break;
         }
 
-        std::cout << std::endl;
+        cout << endl;
     }
 
 }

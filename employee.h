@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 enum class SortingDirection {
     ASC = 1,
     DESC = 2
@@ -29,21 +31,21 @@ enum class SearchingProperty {
 class Employee 
 {
 public:
-    std::string m_surname;
-    std::string m_name;
-    std::string m_patronymic;
-    std::string m_dayOfBirth;
-    std::string m_monthOfBirth;
-    std::string m_yearOfBirth;
-    std::string m_speciality;
-    std::string m_position;
+    string m_surname;
+    string m_name;
+    string m_patronymic;
+    string m_dayOfBirth;
+    string m_monthOfBirth;
+    string m_yearOfBirth;
+    string m_speciality;
+    string m_position;
 
     void getEmployee();
     int getCountOfEmployees();
-    void readEmployees(std::vector <Employee>& masEmployees);
-    void writeEmployee(std::vector <Employee>& masEmployees);
+    void readEmployees(vector <Employee>& masEmployees);
+    void writeEmployee(vector <Employee>& masEmployees);
     void printEmployee();
-    void sortEmployees(std::vector<Employee>& Employee);
-    void findEmployees(std::vector<Employee>& Employee);
+    void sortEmployees(vector<Employee>& Employee);
+    void findEmployees(vector<Employee>& Employee);
 };
 
