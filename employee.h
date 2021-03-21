@@ -42,9 +42,10 @@ public:
 
     void getEmployee();
     int getCountOfEmployees();
-    void readEmployees(vector <Employee>& masEmployees);
-    void writeEmployee(vector <Employee>& masEmployees);
+    void readEmployees(vector <Employee>& arrEmployees);
+    void writeEmployee(vector <Employee>& arrEmployees);
     void printEmployee();
+    void printAllEmployees(vector <Employee>& arrEmployees);
     void sortEmployees(vector<Employee>& Employee);
     void findEmployees(vector<Employee>& Employee);
 };

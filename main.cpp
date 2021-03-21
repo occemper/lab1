@@ -26,7 +26,8 @@ int main()
     SetConsoleOutputCP(1251);
 
     Employee employee{};
-    vector<Employee> masEmployees(employee.getCountOfEmployees());
+    vector<Employee> arrEmployees(employee.getCountOfEmployees());
+    employee.readEmployees(arrEmployees);
 
     char op{};
     while (op != '5') {
@@ -36,22 +37,24 @@ int main()
         {
         default:
         case '1':
-            employee.readEmployees(masEmployees);
+            employee.printAllEmployees(arrEmployees);
             break;
 
         case '2':
         {
             employee.getEmployee();
-            employee.writeEmployee(masEmployees);
+            employee.writeEmployee(arrEmployees);
+            employee.readEmployees(arrEmployees);
         }
         break;
 
         case '3':
-            employee.sortEmployees(masEmployees);
+            employee.sortEmployees(arrEmployees);
+            employee.readEmployees(arrEmployees);
             break;
 
         case '4':
-            employee.findEmployees(masEmployees);
+            employee.findEmployees(arrEmployees);
             break;
 
         case '5':
