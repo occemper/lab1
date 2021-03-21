@@ -1,51 +1,117 @@
 ﻿#include "employee.h"
 #include <iostream>
 #include <algorithm>
+#include <fstream>
+#include <vector>
+#include <iomanip>
 
+using namespace std;
 
-
-void Employee::getEmployee() {
-    std::cin >> m_surname;
-    std::cin >> m_name;
-    std::cin >> m_patronymic;
-    std::cin >> m_dayOfBirth;
-    std::cin >> m_monthOfBirth;
-    std::cin >> m_yearOfBirth;
-    std::cin >> m_speciality;
-    std::cin.ignore();
-    std::getline(std::cin, m_position);
+void Employee::getEmployee()
+{
+    cout << "Введите фамилию: "; cin >> m_surname;
+    cout << "Введите имя: "; cin >> m_name;
+    cout << "Введите отчество: "; cin >> m_patronymic;
+    cout << "Введите день рождения: "; cin >> m_dayOfBirth;
+    cout << "Введите месяц рождения: "; cin >> m_monthOfBirth;
+    cout << "Введите год рождения: "; cin >> m_yearOfBirth;
+    cout << "Введите специальность по образованию: "; cin >> m_speciality;
+    cout << "Введите должность: "; cin >> m_position;
 }
 
-void Employee::printEmployee() {
-    std::cout << m_surname << "\t";
-    std::cout << m_name << "\t";
-    std::cout << m_patronymic << "\t";
-    std::cout << m_dayOfBirth << ".";
-    std::cout << m_monthOfBirth << ".";
-    std::cout << m_yearOfBirth << "\t";
-    std::cout << m_speciality << "\t";
-    std::cout << m_position << std::endl;
+int Employee::getCountOfEmployees()
+{
+    ifstream fin("employees.dat", ofstream::binary);
+    static Employee emp{};
+    int countOfEmployees{ 0 };
+
+    if (!fin.is_open()) {
+        cout << "failed to open employees.dat" << endl;
+    }
+    else
+    {
+        while (fin.read(reinterpret_cast<char*>(&emp), sizeof(Employee))) {
+            ++countOfEmployees;
+        }
+    }
+
+    fin.close();
+
+    return countOfEmployees;
 }
 
-void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
+void Employee::readEmployees(vector <Employee>& masEmployees)
+{
+    ifstream fin("employees.dat", ofstream::binary);
+    Employee emp{};
+
+    if (!fin.is_open()) {
+        cout << "failed to open employees.dat" << endl;
+    }
+    else
+    {
+        for (size_t i = 0; i < masEmployees.size(); i++) {
+            fin.read(reinterpret_cast<char*>(&masEmployees[i]), sizeof(Employee));
+            masEmployees[i].printEmployee();
+        }
+    }
+
+    fin.close();
+}
+
+void Employee::writeEmployee(vector <Employee>& masEmployees)
+{
+    ofstream fout("employees.dat", ios::app, ofstream::binary);
+    masEmployees.push_back(*this);
+    fout.write((char*)this, sizeof(Employee));
+
+    fout.close();
+}
+
+void Employee::printEmployee()
+{
+    cout << m_surname << "\t";
+    cout << m_name << "\t";
+    cout << m_patronymic << "\t";
+    cout << m_dayOfBirth << ".";
+    cout << m_monthOfBirth << ".";
+    cout << m_yearOfBirth << "\t";
+    cout << m_speciality << "\t";
+    cout << m_position << endl;
+}
+
+void rewriteEmployee(vector <Employee>& masEmployees)
+{
+    ofstream fout("employees.dat", ios::out);
+
+    for (size_t i = 0; i < masEmployees.size(); i++)
+    {
+        fout.write((char*)&masEmployees[i], sizeof(Employee));
+    }
+
+    fout.close();
+}
+
+void Employee::sortEmployees(vector<Employee>& masEmployees)
+{
 
     SortingDirection sortDirection{};
     SortingProperty sortProperty{};
     short t;
 
-    std::cout << "Выберите свойство сортировки: 1 – ФИО, 2 – дата рождения, 3 – специальность, 4 – должность: " << std::endl;
-    std::cin >> t;
+    cout << "Выберите свойство сортировки: 1 – ФИО, 2 – дата рождения, 3 – специальность, 4 – должность: " << endl;
+    cin >> t;
     sortProperty = static_cast<SortingProperty>(t);
 
-    std::cout << "Выберите направление сортировки: 1 – по возрастанию, 2 – по убыванию: " << std::endl;
-    std::cin >> t;
+    cout << "Выберите направление сортировки: 1 – по возрастанию, 2 – по убыванию: " << endl;
+    cin >> t;
     sortDirection = static_cast<SortingDirection>(t);
 
     if (sortDirection == SortingDirection::ASC) {
         switch (sortProperty)
         {
         case SortingProperty::FULL_NAME:
-            std::sort(employees, employees + countOfEmployees, [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 if (a.m_surname == b.m_surname) {
                     if (a.m_name == b.m_name)
                         return a.m_patronymic < b.m_patronymic;
@@ -56,7 +122,7 @@ void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
             break;
 
         case SortingProperty::DATE_OF_BIRTH:
-            std::sort(employees, employees + countOfEmployees, [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 if (a.m_yearOfBirth == b.m_yearOfBirth) {
                     if (a.m_monthOfBirth == b.m_monthOfBirth)
                         return a.m_dayOfBirth < b.m_dayOfBirth;
@@ -67,12 +133,12 @@ void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
             break;
 
         case SortingProperty::SPECIALITY:
-            std::sort(employees, employees + countOfEmployees, [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 return a.m_speciality < b.m_speciality; });
             break;
 
         case SortingProperty::POSITION:
-            std::sort(employees, employees + countOfEmployees, [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 return a.m_position < b.m_position; });
             break;
 
@@ -84,7 +150,7 @@ void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
         switch (sortProperty)
         {
         case SortingProperty::FULL_NAME:
-            std::sort(employees, employees + countOfEmployees, [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 if (a.m_surname == b.m_surname) {
                     if (a.m_name == b.m_name)
                         return a.m_patronymic > b.m_patronymic;
@@ -95,7 +161,7 @@ void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
             break;
 
         case SortingProperty::DATE_OF_BIRTH:
-            std::sort(employees, employees + countOfEmployees, [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 if (a.m_yearOfBirth == b.m_yearOfBirth) {
                     if (a.m_monthOfBirth == b.m_monthOfBirth)
                         return a.m_dayOfBirth > b.m_dayOfBirth;
@@ -106,12 +172,12 @@ void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
             break;
 
         case SortingProperty::SPECIALITY:
-            std::sort(employees, employees + countOfEmployees, [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 return a.m_speciality > b.m_speciality; });
             break;
 
         case SortingProperty::POSITION:
-            std::sort(employees, employees + countOfEmployees, [](Employee const& a, Employee const& b) {
+            sort(masEmployees.begin(), masEmployees.end(), [](Employee const& a, Employee const& b) {
                 return a.m_position > b.m_position; });
             break;
 
@@ -119,8 +185,93 @@ void Employee::sortEmployees(Employee employees[], int countOfEmployees) {
             break;
         }
     }
-
+    rewriteEmployee(masEmployees);
 }
 
+void Employee::findEmployees(vector<Employee>& masEmployees)
+{
+
+    SearchingProperty searchProperty{};
+    short t;
+
+    cout << "Выберите свойство поиска: 1 – имя, 2 – фамилия, 3 – очество, 4 – день рождения, 5 – месяц рождения" << endl;
+    cout << "6 – год рождения, 5 – специальность, 6 – должность : " << endl;
+    cin >> t;
+    searchProperty = static_cast<SearchingProperty>(t);
+
+    string strSearch;
+    cin >> strSearch;
+
+    switch (searchProperty)
+    {
+    case SearchingProperty::NAME:
+        for (Employee emp : masEmployees) {
+            if (emp.m_name.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::SURNAME:
+        for (Employee emp : masEmployees) {
+            if (emp.m_surname.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::PATRONYMIC:
+        for (Employee emp : masEmployees) {
+            if (emp.m_patronymic.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::DAY_OF_BIRTH:
+        for (Employee emp : masEmployees) {
+            if (emp.m_dayOfBirth.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::MONTH_OF_BIRTH:
+        for (Employee emp : masEmployees) {
+            if (emp.m_monthOfBirth.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::YEAR_OF_BIRTH:
+        for (Employee emp : masEmployees) {
+            if (emp.m_yearOfBirth.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::SPECIALITY:
+        for (Employee emp : masEmployees) {
+            if (emp.m_speciality.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    case SearchingProperty::POSITION:
+        for (Employee emp : masEmployees) {
+            if (emp.m_position.find(strSearch) != -1) {
+                emp.printEmployee();
+            }
+        }
+        break;
+
+    default:
+        break;
+    }
+
+}
 
 
