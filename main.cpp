@@ -9,11 +9,11 @@ using namespace std;
 
 char getOperation()
 {
-    char op{};
+    wchar_t op{};
     do
     {
-        cout << "1 – вывести список сотрудников, 2 – добавить сотрудника, 3 - сортировка, 4 - поиск, 5 выход: ";
-        cin >> op;
+        wcout << "1 – вывести список сотрудников, 2 – добавить сотрудника, 3 - сортировка, 4 - поиск, 5 выход: ";
+        wcin >> op;
 
     } while (op != '1' && op != '2' && op != '3' && op != '4' && op != '5');
 
@@ -29,7 +29,7 @@ int main()
     vector<Employee> arrEmployees(employee.getCountOfEmployees());
     employee.readEmployees(arrEmployees);
 
-    char op{};
+    wchar_t op{};
     while (op != '5') {
         op = getOperation();
 
@@ -62,7 +62,7 @@ int main()
             break;
         }
 
-        cout << endl;
+        wcout << endl;
     }
 
 }

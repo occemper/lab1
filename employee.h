@@ -31,14 +31,14 @@ enum class SearchingProperty {
 class Employee 
 {
 public:
-    string m_surname;
-    string m_name;
-    string m_patronymic;
-    string m_dayOfBirth;
-    string m_monthOfBirth;
-    string m_yearOfBirth;
-    string m_speciality;
-    string m_position;
+    wstring m_surname;
+    wstring m_name;
+    wstring m_patronymic;
+    wstring m_dayOfBirth;
+    wstring m_monthOfBirth;
+    wstring m_yearOfBirth;
+    wstring m_speciality;
+    wstring m_position;
 
     void getEmployee();
     int getCountOfEmployees();
