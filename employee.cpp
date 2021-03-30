@@ -4,33 +4,40 @@
 #include <fstream>
 #include <vector>
 #include <iomanip>
+#include <locale>
 
 using namespace std;
 
 void Employee::getEmployee()
 {
-    cout << "Введите фамилию: "; cin >> m_surname;
-    cout << "Введите имя: "; cin >> m_name;
-    cout << "Введите отчество: "; cin >> m_patronymic;
-    cout << "Введите день рождения: "; cin >> m_dayOfBirth;
-    cout << "Введите месяц рождения: "; cin >> m_monthOfBirth;
-    cout << "Введите год рождения: "; cin >> m_yearOfBirth;
-    cout << "Введите специальность по образованию: "; cin >> m_speciality;
-    cout << "Введите должность: "; cin >> m_position;
+    wcout << "Введите фамилию: "; wcin >> m_surname;
+    wcout << "Введите имя: "; wcin >> m_name;
+    wcout << "Введите отчество: "; wcin >> m_patronymic;
+    wcout << "Введите день рождения: "; wcin >> m_dayOfBirth;
+    wcout << "Введите месяц рождения: "; wcin >> m_monthOfBirth;
+    wcout << "Введите год рождения: "; wcin >> m_yearOfBirth;
+    wcout << "Введите специальность по образованию: "; wcin >> m_speciality;
+    wcout << "Введите должность: "; wcin >> m_position;
+    m_surname[0] = toupper(m_surname[0], locale(""));
+    m_name[0] = toupper(m_name[0], locale(""));
+    m_patronymic[0] = toupper(m_patronymic[0], locale(""));
+    m_speciality[0] = toupper(m_speciality[0], locale(""));
+    m_position[0] = toupper(m_position[0], locale(""));
 }
 
 int Employee::getCountOfEmployees()
 {
-    ifstream fin("employees.dat", ofstream::binary);
+    wifstream fin("employees.dat", ofstream::binary);
     static Employee emp{};
+    wstring p;
     int countOfEmployees{ 0 };
 
     if (!fin.is_open()) {
-        cout << "failed to open employees.dat" << endl;
+        wcout << "failed to open employees.dat" << endl;
     }
     else
     {
-        while (fin.read(reinterpret_cast<char*>(&emp), sizeof(Employee))) {
+        while (getline(fin, p)) {
             ++countOfEmployees;
         }
     }
@@ -42,16 +49,23 @@ int Employee::getCountOfEmployees()
 
 void Employee::readEmployees(vector <Employee>& arrEmployees)
 {
-    ifstream fin("employees.dat", ofstream::binary);
+    wifstream fin("employees.dat", ofstream::binary);
     Employee emp{};
 
     if (!fin.is_open()) {
-        cout << "failed to open employees.dat" << endl;
+        wcout << "failed to open employees.dat" << endl;
     }
     else
     {
         for (size_t i = 0; i < arrEmployees.size(); i++) {
-            fin.read(reinterpret_cast<char*>(&arrEmployees[i]), sizeof(Employee));
+            fin >> arrEmployees[i].m_surname;
+            fin >> arrEmployees[i].m_name;
+            fin >> arrEmployees[i].m_patronymic;
+            fin >> arrEmployees[i].m_dayOfBirth;
+            fin >> arrEmployees[i].m_monthOfBirth;
+            fin >> arrEmployees[i].m_yearOfBirth;
+            fin >> arrEmployees[i].m_speciality;
+            fin >> arrEmployees[i].m_position;
         }
     }
 
@@ -60,9 +74,16 @@ void Employee::readEmployees(vector <Employee>& arrEmployees)
 
 void Employee::writeEmployee(vector <Employee>& arrEmployees)
 {
-    ofstream fout("employees.dat", ios::app, ofstream::binary);
+    wofstream fout("employees.dat", ios::app, ofstream::binary);
     arrEmployees.push_back(*this);
-    fout.write((char*)this, sizeof(Employee));
+    fout << m_surname << " ";
+    fout << m_name << " ";
+    fout << m_patronymic << " ";
+    fout << m_dayOfBirth << " ";
+    fout << m_monthOfBirth << " ";
+    fout << m_yearOfBirth << " ";
+    fout << m_speciality << " ";
+    fout << m_position << endl;
 
     fout.close();
 }
@@ -70,14 +91,14 @@ void Employee::writeEmployee(vector <Employee>& arrEmployees)
 void Employee::printEmployee()
 {
     const int LENGTH_OF_OUT{ 9 };
-    cout << setw(LENGTH_OF_OUT) << m_surname << "\t";
-    cout << setw(LENGTH_OF_OUT) << m_name << "\t";
-    cout << setw(LENGTH_OF_OUT) << m_patronymic << "\t";
-    cout << m_dayOfBirth << ".";
-    cout << m_monthOfBirth << ".";
-    cout << m_yearOfBirth << "\t";
-    cout << setw(LENGTH_OF_OUT) << m_speciality << "\t";
-    cout << setw(LENGTH_OF_OUT) << m_position << endl;
+    wcout << setw(LENGTH_OF_OUT) << m_surname << "\t";
+    wcout << setw(LENGTH_OF_OUT) << m_name << "\t";
+    wcout << setw(LENGTH_OF_OUT) << m_patronymic << "\t";
+    wcout << m_dayOfBirth << ".";
+    wcout << m_monthOfBirth << ".";
+    wcout << m_yearOfBirth << "\t";
+    wcout << setw(LENGTH_OF_OUT) << m_speciality << "\t";
+    wcout << setw(LENGTH_OF_OUT) << m_position << endl;
 }
 
 void Employee::printAllEmployees(vector <Employee>& arrEmployees)
@@ -89,11 +110,18 @@ void Employee::printAllEmployees(vector <Employee>& arrEmployees)
 
 void rewriteEmployee(vector <Employee>& arrEmployees)
 {
-    ofstream fout("employees.dat", ios::out);
+    wofstream fout("employees.dat", ios::out);
 
     for (size_t i = 0; i < arrEmployees.size(); i++)
     {
-        fout.write((char*)&arrEmployees[i], sizeof(Employee));
+        fout << arrEmployees[i].m_surname << " ";
+        fout << arrEmployees[i].m_name << " ";
+        fout << arrEmployees[i].m_patronymic << " ";
+        fout << arrEmployees[i].m_dayOfBirth << " ";
+        fout << arrEmployees[i].m_monthOfBirth << " ";
+        fout << arrEmployees[i].m_yearOfBirth << " ";
+        fout << arrEmployees[i].m_speciality << " ";
+        fout << arrEmployees[i].m_position << endl;
     }
 
     fout.close();
@@ -106,12 +134,12 @@ void Employee::sortEmployees(vector<Employee>& arrEmployees)
     SortingProperty sortProperty{};
     short t;
 
-    cout << "Выберите свойство сортировки: 1 – ФИО, 2 – дата рождения, 3 – специальность, 4 – должность: " << endl;
-    cin >> t;
+    wcout << "Выберите свойство сортировки: 1 – ФИО, 2 – дата рождения, 3 – специальность, 4 – должность: " << endl;
+    wcin >> t;
     sortProperty = static_cast<SortingProperty>(t);
 
-    cout << "Выберите направление сортировки: 1 – по возрастанию, 2 – по убыванию: " << endl;
-    cin >> t;
+    wcout << "Выберите направление сортировки: 1 – по возрастанию, 2 – по убыванию: " << endl;
+    wcin >> t;
     sortDirection = static_cast<SortingDirection>(t);
 
     if (sortDirection == SortingDirection::ASC) {
@@ -201,12 +229,12 @@ void Employee::findEmployees(vector<Employee>& arrEmployees)
     SearchingProperty searchProperty{};
     short t;
 
-    cout << "Свойство поиска: 1 – имя, 2 – фамилия, 3 – очество, 4,5,6 – день/месяц/год рождения, 7 – специальность, 8 – должность." << endl;
-    cin >> t;
+    wcout << "Свойство поиска: 1 – имя, 2 – фамилия, 3 – очество, 4,5,6 – день/месяц/год рождения, 7 – специальность, 8 – должность." << endl;
+    wcin >> t;
     searchProperty = static_cast<SearchingProperty>(t);
 
-    string strSearch;
-    cin >> strSearch;
+    wstring strSearch;
+    wcin >> strSearch;
 
     switch (searchProperty)
     {
